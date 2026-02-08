@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Be My Valentine ❤️</title>
+
+  <style>
+          @keyframes heartBeat {
+  0%   { transform: scale(var(--scale)); }
+  25%  { transform: scale(calc(var(--scale) + 0.15)); }
+  50%  { transform: scale(var(--scale)); }
+  75%  { transform: scale(calc(var(--scale) + 0.12)); }
+  100% { transform: scale(var(--scale)); }
+}
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      
+      /* Background image */
+      background: url("assets/bg-1.webp") center / cover no-repeat fixed;
+    }
+
+    /* Decorative SVGs */
+    .corner {
+      position: absolute;
+      width: 140px;
+      max-width: 35vw;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .top-left {
+      top: 15px;
+      left: 15px;
+    }
+
+    .top-right {
+      top: 15px;
+      right: 15px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2rem;
+      border-radius: 22px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      max-width: 360px;
+      z-index: 10;
+      position: relative;
+    }
+
+    h1 {
+      color: #e63946;
+      margin-bottom: 0.5rem;
+    }
+
+    #message {
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      min-height: 60px;
+    }
+
+    button {
+      padding: 12px 22px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      margin: 8px;
+      transition: transform 0.2s;
+    }
+
+    .yes {
+  background: #e63946;
+  color: white;
+  --scale: 1;
+  transform: scale(var(--scale));
+}
+
+    .no {
+      background: #adb5bd;
+      color: black;
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp linear forwards;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-120vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Decorative SVGs -->
+  <img
+    src="assets/Love In The Air SVG Cut File.svg"
+    class="corner top-left"
+    alt="Love in the air"
+  >
+
+  <img
+    src="assets/All You Need Is Love SVG Cut File.svg"
+    class="corner top-right"
+    alt="All you need is love"
+  >
+
+  <!-- Main card -->
+  <div class="card" id="card">
+    <h1>Shreya 😌❤️</h1>
+
+    <div id="message">
+      I was going to act chill…<br>
+      but clearly that plan failed 😏
+    </div>
+
+    <p><strong>Will you be my Valentine?</strong></p>
+
+    <button class="yes" onclick="sayYes()">Yes 💖</button>
+    <button class="no" onclick="handleNo()">No 🙄</button>
+  </div>
+
+  <script>
+    let noCount = 0;
+    let yesScale = 1;
+
+    const noMessages = [
+      "Whoa, straight to NO? Ice cold 😳",
+      "Are you sure? My heart just tripped 🥲",
+      "I literally picked this background for you 😔",
+      "I’ll be extra nice. I promise. Probably. 😌",
+      "This is getting emotionally expensive 😤",
+      "I’ll be nicer. Suspiciously nicer 😌",
+      "We'll go on pani-puri dates each week.",
+      "I'll try to play the violin, I swear 👀",
+      "You enjoy this power a bit too much 😑",
+      "Blink twice if this is flirting 😏",
+      "Fine. I’ll stop asking… (I won’t) 😏",
+      "Okay now I’m just emotionally invested 🥹"
+    ];
+    function growYesWithBeat() {
+  const yesBtn = document.querySelector(".yes");
+
+  // increase scale
+  yesScale += 0.08;
+  yesScale = Math.min(yesScale, 1.8); // safety cap
+
+  // update CSS variable
+  yesBtn.style.setProperty("--scale", yesScale);
+
+  // retrigger heartbeat animation
+  yesBtn.style.animation = "none";
+  yesBtn.offsetHeight; // force reflow
+  yesBtn.style.animation = "heartBeat 1s ease";
+}
+
+    function handleNo() {
+      const msg = document.getElementById("message");
+
+      msg.innerHTML =
+        noMessages[Math.min(noCount, noMessages.length - 1)];
+
+      noCount++;
+      // Keep NO button same size, move slightly
+  const btn = document.querySelector(".no");
+
+  const maxX = 60;
+  const maxY = 40;
+
+  const x = Math.random() * maxX - maxX / 2;
+  const y = Math.random() * maxY - maxY / 2;
+
+  btn.style.transform = `translate(${x}px, ${y}px)`;
+
+  // Grow YES button
+  growYesWithBeat();
+    }
+
+    function sayYes() {
+      document.getElementById("card").innerHTML = `
+        <h1>EXCELLENT CHOICE 😍🔥</h1>
+        <p>
+          You’ve officially signed up for:
+        </p>
+        <ul style="text-align:left;">
+          <li>💬 Flirting on demand</li>
+          <li>😂 Laughing at dumb jokes</li>
+          <li>😏 Occasional bad influence</li>
+          <li>😏 Zero escape routes</li>
+          <li>😏 Premium attention (ad-free)</li>
+        </ul>
+        <p><strong>No Take Backsies 😌</strong></p>
+      `;
+    }
+
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = Math.random() > 0.5 ? "❤️" : "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration =
+        Math.random() * 3 + 4 + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 7000);
+    }
+
+    setInterval(createHeart, 300);
+  </script>
+
+</body>
+</html>
